@@ -12,15 +12,15 @@ public class FieldDto {
     private Instant created;
     private Instant updated;
     private String countryCode;
-    private Boundary boundaries;
+    private Boundary boundary;
 
-    public FieldDto(String id, String name, Instant created, Instant updated, String countryCode, Boundary boundaries) {
+    public FieldDto(String id, String name, Instant created, Instant updated, String countryCode, Boundary boundary) {
         this.id = id;
         this.name = name;
         this.created = created;
         this.updated = updated;
         this.countryCode = countryCode;
-        this.boundaries = boundaries;
+        this.boundary = boundary;
     }
 
     public String getId() {
@@ -63,12 +63,12 @@ public class FieldDto {
         this.countryCode = countryCode;
     }
 
-    public Boundary getBoundaries() {
-        return boundaries;
+    public Boundary getBoundary() {
+        return boundary;
     }
 
-    public void setBoundaries(Boundary boundaries) {
-        this.boundaries = boundaries;
+    public void setBoundary(Boundary boundary) {
+        this.boundary = boundary;
     }
 
     @Override
@@ -81,12 +81,12 @@ public class FieldDto {
                 created.equals(fieldDto.created) &&
                 updated.equals(fieldDto.updated) &&
                 Objects.equals(countryCode, fieldDto.countryCode) &&
-                boundaries.equals(fieldDto.boundaries);
+                boundary.equals(fieldDto.boundary);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, created, updated, countryCode, boundaries);
+        return Objects.hash(id, name, created, updated, countryCode, boundary);
     }
 
     @Override
@@ -97,7 +97,7 @@ public class FieldDto {
                 ", created=" + created +
                 ", updated=" + updated +
                 ", countryCode='" + countryCode + '\'' +
-                ", boundaries=" + boundaries +
+                ", boundaries=" + boundary +
                 '}';
     }
 }
