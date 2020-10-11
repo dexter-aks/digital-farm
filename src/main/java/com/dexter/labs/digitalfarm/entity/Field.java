@@ -29,7 +29,7 @@ public class Field {
     @Column(name = "updated")
     private Instant updated;
 
-    @Column(name = "country_code", unique = true)
+    @Column(name = "country_code")
     private String countryCode;
 
     @Column(name = "boundary_id", nullable = false, unique = true)
@@ -79,10 +79,6 @@ public class Field {
 
     public void setCountryCode(String countryCode) {
         this.countryCode = countryCode;
-    }
-
-    public void setBoundaryId(String boundaryId) {
-        this.boundaryId = boundaryId;
     }
 
     @Override

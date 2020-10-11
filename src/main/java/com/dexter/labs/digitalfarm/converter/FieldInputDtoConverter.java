@@ -5,10 +5,9 @@ import com.dexter.labs.digitalfarm.entity.Field;
 import org.springframework.stereotype.Component;
 
 @Component
-public class FieldInputDtoConverter implements InputDtoConverter<Polygon, Field>{
+public class FieldInputDtoConverter{
 
-    @Override
-    public Field convert(Polygon polygon) {
-        return new Field(polygon.getName(), "DEU", polygon.getId());
+    public Field convert(Polygon polygon, String countryCode) {
+        return new Field(polygon.getName(), countryCode, polygon.getId());
     }
 }
