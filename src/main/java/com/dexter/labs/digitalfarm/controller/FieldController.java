@@ -12,13 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
 
 @RestController
-@RequestMapping(path = "/field")
+@RequestMapping(path = "/fields")
 public class FieldController {
 
     @Autowired
@@ -37,16 +37,16 @@ public class FieldController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<FieldDto> createField(
-            @RequestBody @Validated BoundaryRequestDto boundaryRequestDto) throws InterruptedException, ClientException, IOException {
+            @RequestBody @Valid BoundaryRequestDto boundaryRequestDto) throws InterruptedException, ClientException, IOException {
         System.out.println("Calling Create Polygon");
-        return ResponseEntity.ok(fieldService.createField(boundaryRequestDto));
+        return new ResponseEntity<>(fieldService.createField(boundaryRequestDto), HttpStatus.CREATED);
     }
 
     @PutMapping(path = "/{fieldId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<FieldDto> updateField(
             @PathVariable(name = "fieldId") String fieldId,
-            @RequestBody BoundaryRequestDto boundaryRequestDto
+            @RequestBody @Valid BoundaryRequestDto boundaryRequestDto
     ) throws InterruptedException, IOException, FieldNotFoundException, ClientException {
         System.out.println("Calling Update Polygon");
         return ResponseEntity.ok(fieldService.updateField(fieldId, boundaryRequestDto));

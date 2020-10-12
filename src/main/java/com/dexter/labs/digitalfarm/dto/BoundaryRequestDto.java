@@ -3,19 +3,31 @@ package com.dexter.labs.digitalfarm.dto;
 import com.dexter.labs.digitalfarm.client.owm.model.GeoJson;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.lang.NonNull;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BoundaryRequestDto {
 
+    @NotNull
+    @NotEmpty
     private String name;
 
+    @NotNull
+    @NotEmpty
     private String countryCode;
 
+    @NotNull
     @JsonProperty("geo_json")
     private GeoJson geoJson;
+
+    public BoundaryRequestDto(String name, String countryCode, GeoJson geoJson) {
+        this.name = name;
+        this.countryCode = countryCode;
+        this.geoJson = geoJson;
+    }
 
     public String getName() {
         return name;

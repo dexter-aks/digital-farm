@@ -56,15 +56,9 @@ public class FieldService implements IFieldService{
 
         String boundaryId = field.getBoundaryId();
         Polygon polygon = polygonClient.updatePolygon(boundaryId, boundaryRequestDto);
-        String name = boundaryRequestDto.getName();
-        String countryCode = boundaryRequestDto.getCountryCode();
-        String currentCountryCode = field.getCountryCode();
-        if( name != null && !name.isEmpty() && !field.getName().equals(name)){
-            field.setName(boundaryRequestDto.getName());
-        }
-        if(countryCode != null && !countryCode.isEmpty() && currentCountryCode!= null && !currentCountryCode.equals(countryCode)){
-            field.setCountryCode(boundaryRequestDto.getCountryCode());
-        }
+
+        field.setName(boundaryRequestDto.getName());
+        field.setCountryCode(boundaryRequestDto.getCountryCode());
         field.setUpdated(Instant.now());
         Field latestField = fieldRepository.save(field);
 
