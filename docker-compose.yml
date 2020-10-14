@@ -1,33 +1,40 @@
-version: "3"
+version: '3.7'
 services:
   postgres:
-    image: postgres:latest
-    network_mode: bridge
+    image: postgres
     container_name: postgres
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    expose:
-      - 5432
-    ports:
-      - 5432:5432
+    restart: always
     environment:
-      - POSTGRES_PASSWORD=admin
+      - DATABASE_HOST=127.0.0.1
       - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
       - POSTGRES_DB=digital-farm
-    restart: unless-stopped
-  # APP*****************************************
-  digital-farm:
-    image: digital-farm:latest
-    network_mode: bridge
-    container_name: digital-farm
-    expose:
-      - 8080
     ports:
-      - 8080:8080
-    restart: unless-stopped
+      - "5432:5432"
+    volumes:
+      - ./docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+
+  pgadmin-compose:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "postgres@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "postgres!"
+    ports:
+      - "16544:80"
+    depends_on:
+      - postgres
+  #SpringBoot APP
+  digital-farm:
+    build: .
+    image: digital-farm
+    container_name: digital-farm
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/digital-farm
+    ports:
+      - "8080:8080"
+    restart: always
     depends_on:
       - postgres
     links:
       - postgres
-volumes:
-  postgres-data:
