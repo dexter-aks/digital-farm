@@ -6,6 +6,7 @@ import com.dexter.labs.digitalfarm.entity.Field;
 import com.dexter.labs.digitalfarm.repository.FieldRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,19 +14,27 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Testcontainers
 public class FieldIntegrationTest {
+
+    @Container
+    public static PostgreSQLContainer<PostgresTestContainer> postgresTestContainer = PostgresTestContainer.getInstance();
 
     @Value("${polygon.base.url}")
     private String baseUrl;
@@ -51,6 +60,12 @@ public class FieldIntegrationTest {
     @AfterEach
     public void clean(){
         fieldRepository.deleteAll();
+    }
+
+    @Order(0)
+    @Test
+    void isPostgresContainerRunning() {
+        assertTrue(postgresTestContainer.isRunning());
     }
 
     @Test
