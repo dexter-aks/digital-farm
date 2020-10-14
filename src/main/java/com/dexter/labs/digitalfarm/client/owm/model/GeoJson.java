@@ -1,11 +1,19 @@
 package com.dexter.labs.digitalfarm.client.owm.model;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class GeoJson {
-
+    @NotNull
+    @NotEmpty
     private String type;
+
+    @NotNull
     private Object properties;
+
+    @NotNull
+    @NotEmpty
     private Geometry geometry;
 
     public String getType() {
