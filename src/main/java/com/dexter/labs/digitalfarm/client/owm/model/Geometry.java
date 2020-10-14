@@ -1,10 +1,14 @@
 package com.dexter.labs.digitalfarm.client.owm.model;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class Geometry {
 
+    @NotNull
     private String type;
+
+    @NotNull
     private List<List<List<Float>>> coordinates;
 
     public String getType() {
