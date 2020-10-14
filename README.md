@@ -74,6 +74,7 @@ Application to create field and provide weather details using https://agromonito
 3. Polygon created in Agro API for Testing is not deleted
 4. API Key is unmasked
 5. Only Polygon ID from Agro API is saved in database, rest of details is fetched directly
+6. More Test cases can be added
 
 
 
